@@ -17,23 +17,29 @@ export type RadioState = {
   volume: number
 }
 
-const STORAGE_KEY = 'spark-radio-v1'
+// Bumped to v2 so everyone's old saved choice (stored by position) is dropped once and the new default applies.
+const STORAGE_KEY = 'spark-radio-v2'
 const DEFAULT_VOLUME = 0.6
+/** The song new visitors hear first. Change this id to make a different track the default. */
+const DEFAULT_TRACK_ID = 'emergency-meeting'
+const DEFAULT_INDEX = Math.max(0, tracks.findIndex((t) => t.id === DEFAULT_TRACK_ID))
 
 function load(): Pick<RadioState, 'index' | 'volume'> {
   try {
     const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}')
-    const index = Number.isInteger(raw.index) && raw.index >= 0 && raw.index < tracks.length ? raw.index : 0
+    // The saved choice is the track id, so reordering the playlist never changes what someone picked.
+    const saved = tracks.findIndex((t) => t.id === raw.trackId)
+    const index = saved >= 0 ? saved : DEFAULT_INDEX
     const volume = typeof raw.volume === 'number' && raw.volume >= 0 && raw.volume <= 1 ? raw.volume : DEFAULT_VOLUME
     return { index, volume }
   } catch {
-    return { index: 0, volume: DEFAULT_VOLUME }
+    return { index: DEFAULT_INDEX, volume: DEFAULT_VOLUME }
   }
 }
 
 function save() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ index: state.index, volume: state.volume }))
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ trackId: tracks[state.index].id, volume: state.volume }))
   } catch {
     /* private mode or storage blocked: the radio still works, it just forgets */
   }

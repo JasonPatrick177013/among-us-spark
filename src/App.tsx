@@ -1,4 +1,5 @@
 import { Starfield } from './components/art/Starfield'
+import { CursorGlow } from './components/CursorGlow'
 import { EventInfo } from './components/EventInfo'
 import { Faq } from './components/Faq'
 import { Footer } from './components/Footer'
@@ -10,6 +11,7 @@ import { ObservationDeck } from './components/ObservationDeck'
 import { ReactorGame } from './components/ReactorGame'
 import { Registration } from './components/Registration'
 import { Schedule } from './components/Schedule'
+import { ScrollRail } from './components/ScrollRail'
 import { SectionTransition } from './components/ui/SectionTransition'
 
 export default function App() {
@@ -22,6 +24,7 @@ export default function App() {
         Skip to event details
       </a>
       <Starfield />
+      <CursorGlow />
       <Navbar />
       <main>
         <Hero />
@@ -43,6 +46,7 @@ export default function App() {
         <Faq />
       </main>
       <Footer />
+      <ScrollRail />
     </>
   )
 }

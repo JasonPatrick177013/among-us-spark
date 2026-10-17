@@ -25,7 +25,7 @@ Impostor Protocol is a single-page event site: hero with call to action, mission
 
 - **Responsive, laptop-first layout** that scales down cleanly to tablets and phones
 - **Single source of truth** for all event content in `src/config/event.ts`
-- **Scroll tour, schedule timeline and bulkhead-door section transitions**, all keyboard friendly and static under reduced motion
+- **Scroll tour, schedule timeline and bulkhead-door section transitions, a progress rail and a themed cursor**, all keyboard friendly and static under reduced motion
 - **Reactor mini-game** that works with keyboard, touch and screen readers
 - **Ship radio** in the navbar: on/off, change song, volume and song credits, with four original CC0 tracks generated in the browser (no audio files)
 - **Optional live countdown** that only appears when a valid future start date is set
@@ -117,6 +117,8 @@ src/
 │   ├── Journey.tsx       # Scroll tour with a sticky ship map
 │   ├── ObservationDeck.tsx  # Four original SVG scenes
 │   ├── Schedule.tsx      # Scroll-linked timeline
+│   ├── ScrollRail.tsx    # Right-edge progress rail with a sliding cadet
+│   ├── CursorGlow.tsx    # Neon ring that trails the mouse
 │   ├── Missions.tsx
 │   ├── ReactorGame.tsx   # Reactor mini-game
 │   ├── Registration.tsx

@@ -480,3 +480,64 @@
   max-height: calc(100dvh - 5.5rem);
   overflow-y: auto;
 }
+
+/* ---------- Cursor, scrollbar ---------- */
+
+/* Themed cursors for mouse users: a neon arrow, and a gold target over anything clickable. */
+@media (pointer: fine) {
+  html {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M4 3l20 9-9 3-3 9z' fill='%23ff4f63' stroke='%2307041f' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='24' cy='24' r='3.5' fill='%233fd2ff' stroke='%2307041f' stroke-width='1.5'/%3E%3C/svg%3E")
+        4 3,
+      auto;
+  }
+  a,
+  button:not(:disabled),
+  [role='tab'],
+  summary,
+  label[for] {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='9' fill='%23ffcb3d' fill-opacity='.3' stroke='%23ffcb3d' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23ff4f63'/%3E%3Cpath d='M16 2v6M16 24v6M2 16h6M24 16h6' stroke='%23ffcb3d' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E")
+        16 16,
+      pointer;
+  }
+}
+
+.cursor-glow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid rgb(255 203 61 / 0.75);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 79 99 / 0.28), transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-glow {
+    display: none;
+  }
+}
+
+/* A scrollbar that matches the page. Modern browsers use the standard properties, older WebKit the pseudo-elements. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #ff4f63 #0d0733;
+}
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0d0733;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(#ff4f63, #b690ff, #3fd2ff);
+    border: 3px solid #0d0733;
+    border-radius: 999px;
+  }
+}
