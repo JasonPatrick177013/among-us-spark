@@ -25,6 +25,8 @@ Impostor Protocol is a single-page event site: hero with call to action, mission
 
 - **Responsive, laptop-first layout** that scales down cleanly to tablets and phones
 - **Single source of truth** for all event content in `src/config/event.ts`
+- **Scroll tour, schedule timeline and bulkhead-door section transitions**, all keyboard friendly and static under reduced motion
+- **Reactor mini-game** that works with keyboard, touch and screen readers
 - **Optional live countdown** that only appears when a valid future start date is set
 - **Three registration modes**: demo form, external form link, or a public form-service endpoint
 - **Client-side form validation** with clear, inline error messages
@@ -74,6 +76,7 @@ All event content lives in **`src/config/event.ts`**. Fields set to `null` rende
 | --- | --- |
 | Event name, headline, description | `name`, `headline`, `description` |
 | Date, time, venue, format, players, registration info | the `details` block |
+| The evening timeline | `schedule` |
 | Live countdown | `startsAtISO`, an ISO date with time zone, e.g. `'2026-12-05T18:00:00+05:30'` |
 | Send people to a Google Form | `registration.externalFormUrl` |
 | Social links | `socialLinks` |
@@ -101,12 +104,16 @@ src/
 │   ├── Navbar.tsx
 │   ├── Hero.tsx
 │   ├── EventInfo.tsx
+│   ├── Journey.tsx       # Scroll tour with a sticky ship map
+│   ├── ObservationDeck.tsx  # Four original SVG scenes
+│   ├── Schedule.tsx      # Scroll-linked timeline
 │   ├── Missions.tsx
+│   ├── ReactorGame.tsx   # Reactor mini-game
 │   ├── Registration.tsx
 │   ├── Faq.tsx
 │   ├── Footer.tsx
-│   ├── art/              # Original SVG artwork (Cadet, ShipWindow, Starfield)
-│   └── ui/               # Logo, Reveal, SectionHeading
+│   ├── art/              # Original SVG artwork (Cadet, ShipWindow, Starfield, Scenes)
+│   └── ui/               # Logo, Reveal, SectionHeading, SectionTransition
 ├── hooks/                # Countdown and active-section tracking
 ├── lib/                  # Form validation and navigation helpers
 └── index.css             # Design tokens, buttons, panels, animations

@@ -16,6 +16,8 @@ export type EventDetailKey =
   | 'players'
   | 'registration'
 
+export type ScheduleItem = { time: string; title: string; text: string }
+
 export const eventConfig = {
   // Working title and copy. Change freely: it is branding, not a fact about the event.
   name: 'Impostor Protocol',
@@ -41,6 +43,18 @@ export const eventConfig = {
     players: '10 players per lobby, up to 6 lobbies, 3 impostors in the final round' as string | null, // e.g. '10 players per lobby'
     registration: 'Free entry, sign-ups close 1 December or when all lobbies are full' as string | null, // e.g. 'Open until 1 December'
   } satisfies Record<EventDetailKey, string | null>,
+
+  /** The evening, in order. Shown as the scrolling timeline in the Schedule section. */
+  schedule: [
+    { time: '5:30 PM', title: 'Doors open', text: 'Join the Discord, test your mic and find your lobby.' },
+    { time: '6:00 PM', title: 'Briefing', text: 'The host walks through the rules, roles and lobby settings.' },
+    { time: '6:15 PM', title: 'Practice round', text: 'A relaxed warm-up so first-timers can learn the controls.' },
+    { time: '6:30 PM', title: 'Main rounds, part one', text: 'Real rounds begin. Finish tasks, spot the impostor, call the meeting.' },
+    { time: '7:30 PM', title: 'Break and lobby shuffle', text: 'Stretch, grab a snack and get moved into a new lobby.' },
+    { time: '7:45 PM', title: 'Main rounds, part two', text: 'Fresh lobbies, fresh suspects, same suspicious pockets.' },
+    { time: '8:45 PM', title: 'Final round', text: 'Everyone still standing plays one last round with three impostors.' },
+    { time: '9:15 PM', title: 'Awards', text: 'Best detective, best alibi and most chaotic crewmate.' },
+  ] as ScheduleItem[],
 
   /**
    * Registration.
