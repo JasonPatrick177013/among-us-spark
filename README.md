@@ -121,12 +121,7 @@ src/
 
 ## Deployment
 
-The site is a static build and deploys to any static host. For Vercel:
-
-1. Push this repository to GitHub.
-2. In Vercel, choose **Add New → Project** and import the repository.
-3. Vercel detects Vite automatically. Confirm **Build Command** `npm run build` and **Output Directory** `dist`.
-4. Click **Deploy**. Later pushes to `main` redeploy automatically.
+The site is a static build and deploys to any static host.
 
 No environment variables are required.
 
