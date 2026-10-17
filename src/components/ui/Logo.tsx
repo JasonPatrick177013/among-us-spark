@@ -11,7 +11,7 @@ export function Logo({ name }: LogoProps) {
         <path d="M16 38c0-10 7-18 16-18s16 8 16 18z" fill="#F45858" />
         <path d="M23 33c1-5 4-8 8-9" stroke="#FFE5D1" strokeWidth="3" strokeLinecap="round" fill="none" opacity=".8" />
       </svg>
-      <span className="font-display text-lg font-bold tracking-tight">{name}</span>
+      <span className="font-display text-lg font-bold tracking-tight max-[360px]:hidden">{name}</span>
     </span>
   )
 }

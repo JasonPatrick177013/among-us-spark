@@ -3,6 +3,7 @@ import { Menu, Rocket, X } from 'lucide-react'
 import { eventConfig } from '../config/event'
 import { navLinks } from '../config/nav'
 import { useActiveSection } from '../hooks/useActiveSection'
+import { MusicPlayer } from './MusicPlayer'
 import { Logo } from './ui/Logo'
 
 export function Navbar() {
@@ -29,37 +30,42 @@ export function Navbar() {
           <Logo name={eventConfig.name} />
         </a>
 
-        {/* Desktop links */}
-        <ul className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <li key={link.id}>
-              <a
-                href={`#${link.id}`}
-                className={linkClass(link.id)}
-                aria-current={active === link.id ? 'location' : undefined}
-              >
-                {link.label}
+        <div className="flex items-center gap-2 md:gap-3">
+          {/* Desktop links */}
+          <ul className="hidden items-center gap-1 md:flex">
+            {navLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={`#${link.id}`}
+                  className={linkClass(link.id)}
+                  aria-current={active === link.id ? 'location' : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li className="ml-3">
+              <a href="#register" className="btn btn-primary !min-h-10 !px-4 !py-2 !text-sm">
+                <Rocket size={16} aria-hidden="true" /> Join the crew
               </a>
             </li>
-          ))}
-          <li className="ml-3">
-            <a href="#register" className="btn btn-primary !min-h-10 !px-4 !py-2 !text-sm">
-              <Rocket size={16} aria-hidden="true" /> Join the crew
-            </a>
-          </li>
-        </ul>
+          </ul>
 
-        {/* Mobile menu button */}
-        <button
-          type="button"
-          className="grid h-11 w-11 place-items-center rounded-lg border border-line md:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
-        </button>
+          {/* Ship radio: on/off, change song, credits */}
+          <MusicPlayer />
+
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            className="grid h-11 w-11 place-items-center rounded-lg border border-line md:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu panel */}

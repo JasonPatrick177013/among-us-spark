@@ -27,6 +27,7 @@ Impostor Protocol is a single-page event site: hero with call to action, mission
 - **Single source of truth** for all event content in `src/config/event.ts`
 - **Scroll tour, schedule timeline and bulkhead-door section transitions**, all keyboard friendly and static under reduced motion
 - **Reactor mini-game** that works with keyboard, touch and screen readers
+- **Ship radio** in the navbar: on/off, change song, volume and song credits, with four original CC0 tracks generated in the browser (no audio files)
 - **Optional live countdown** that only appears when a valid future start date is set
 - **Three registration modes**: demo form, external form link, or a public form-service endpoint
 - **Client-side form validation** with clear, inline error messages
@@ -46,6 +47,15 @@ Impostor Protocol is a single-page event site: hero with call to action, mission
 | Icons | Lucide React |
 | Fonts | Space Grotesk, Inter (via Fontsource) |
 | Linting | Oxlint |
+
+## Ship radio (music)
+
+The navbar has a split-pill music control: the left half turns music on or off, the right half opens a panel with a track list, previous/next, volume and the song credits. Nothing plays until the visitor clicks, because browsers block autoplay.
+
+- Playlist and credits live in `src/config/music.ts`.
+- The four default tracks are original compositions written as code in `src/audio/songs.ts` and played with the Web Audio API. They are dedicated to the public domain (CC0), so there is nothing to licence or attribute.
+- To add a real recording, put the `.mp3` in `public/audio/` and add an entry with `src` (there is a commented example in `music.ts`). Only use music you have the right to use, and copy the credit line the artist asks for into `composer`, `license` and `note`.
+- The chosen song and volume are remembered in `localStorage`.
 
 ## Getting Started
 
