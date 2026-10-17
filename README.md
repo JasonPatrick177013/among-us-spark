@@ -125,7 +125,7 @@ src/
 │   ├── Faq.tsx
 │   ├── Footer.tsx
 │   ├── art/              # Original SVG artwork (Cadet, ShipWindow, Starfield, Scenes)
-│   └── ui/               # Logo, Reveal, SectionHeading, SectionTransition
+│   └── ui/               # Logo, Reveal, SectionHeading, SectionTransition (the opening box)
 ├── hooks/                # Countdown and active-section tracking
 ├── lib/                  # Form validation and navigation helpers
 └── index.css             # Design tokens, buttons, panels, animations

@@ -229,71 +229,143 @@
   }
 }
 
-/* ---------- Deck transitions, scenes and the reactor game ---------- */
+/* ---------- Opening-box section transitions, scenes and the reactor game ---------- */
 
-.bulkhead {
+/* --open runs 0 to 1 and is set from JavaScript as the box scrolls through the screen. */
+.crate-scene {
+  --open: 0;
   position: relative;
-  display: grid;
-  place-items: center;
-  height: 4.5rem;
+  height: 12.5rem;
   max-width: 80rem;
   margin-inline: auto;
   overflow: hidden;
 }
-.bulkhead-glow {
+.crate {
   position: absolute;
-  inset-inline: 1.25rem;
-  top: 50%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--tone), transparent);
-  box-shadow: 0 0 18px 2px var(--tone);
-  opacity: 0;
-  transform: scaleX(0.2);
-  transition:
-    opacity 0.6s ease 0.2s,
-    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s;
+  left: 50%;
+  bottom: 1rem;
+  width: 96px;
+  height: 58px;
+  margin-left: -48px;
 }
-.bulkhead-label {
-  position: relative;
+.crate-body {
+  position: absolute;
+  inset: 0;
+  border: 3px solid #07041f;
+  border-radius: 10px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--tone) 80%, white), var(--tone) 55%, color-mix(in srgb, var(--tone) 65%, black));
+  box-shadow: 0 6px 0 rgb(7 4 31 / 0.45);
+}
+/* gold ribbon down the front */
+.crate-body::before,
+.crate-lid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 16px;
+  margin-left: -8px;
+  background: #ffcb3d;
+  border-inline: 2px solid #07041f;
+}
+.crate-lid {
+  position: absolute;
+  top: -22px;
+  left: -7px;
+  right: -7px;
+  height: 25px;
+  border: 3px solid #07041f;
+  border-radius: 8px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--tone) 70%, white), var(--tone));
+  transform-origin: 0% 100%;
+  transform: translate(calc(var(--open) * -30px), calc(var(--open) * -50px)) rotate(calc(var(--open) * -24deg));
+  transition: transform 0.12s linear;
+}
+.crate-lid::before {
+  top: -3px;
+  bottom: -3px;
+}
+/* a pink bow on the lid */
+.crate-bow {
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  width: 8px;
+  height: 8px;
   z-index: 1;
-  padding: 0.2rem 0.9rem;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: #ff4f63;
+  border: 2px solid #07041f;
+}
+.crate-bow::before,
+.crate-bow::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  width: 16px;
+  height: 12px;
+  background: #ff4f63;
+  border: 2px solid #07041f;
+  border-radius: 50% 50% 50% 8px;
+}
+.crate-bow::before {
+  right: 6px;
+  transform: rotate(-20deg);
+}
+.crate-bow::after {
+  left: 6px;
+  transform: rotate(20deg) scaleX(-1);
+}
+/* a fan of colourful light bursting from the open box */
+.crate-rays {
+  position: absolute;
+  left: 50%;
+  bottom: calc(1rem + 54px);
+  width: 440px;
+  height: 220px;
+  margin-left: -220px;
+  background: repeating-conic-gradient(from -90deg at 50% 100%, #ff4f63 0 7deg, transparent 7deg 14deg, #ffcb3d 14deg 21deg, transparent 21deg 28deg, #3fd2ff 28deg 35deg, transparent 35deg 42deg, #6cf08a 42deg 49deg, transparent 49deg 56deg);
+  -webkit-mask-image: linear-gradient(to top, #000 5%, transparent 85%);
+  mask-image: linear-gradient(to top, #000 5%, transparent 85%);
+  opacity: calc(var(--open) * 0.55);
+  transform: scale(calc(0.35 + var(--open) * 0.65));
+  transform-origin: 50% 100%;
+  transition:
+    transform 0.12s linear,
+    opacity 0.12s linear;
+}
+.crate-bit {
+  position: absolute;
+  left: 50%;
+  bottom: calc(1rem + 52px);
+  margin-left: -4px;
+  border-radius: 2px;
+  background: var(--c);
+  opacity: clamp(0, calc(var(--open) * 2.4 - 0.4), 1);
+  transform: translate(calc(var(--dx) * var(--open)), calc(var(--dy) * var(--open))) rotate(calc(var(--rot) * var(--open)));
+  transition:
+    transform 0.12s linear,
+    opacity 0.12s linear;
+}
+.crate-label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(1rem + 58px + 22px + 50px + 12px);
+  z-index: 1;
+  padding: 0.3rem 1rem;
+  border: 2px solid var(--tone);
   border-radius: 999px;
   background: rgb(7 4 31 / 0.92);
-  border: 1px solid var(--tone);
   color: var(--tone);
-  opacity: 0;
-  transition: opacity 0.6s ease 0.55s;
-}
-.bulkhead-door {
-  position: absolute;
-  top: 0.75rem;
-  bottom: 0.75rem;
-  width: 50%;
-  z-index: 2;
-  background: repeating-linear-gradient(135deg, var(--tone) 0 12px, #07041f 12px 24px);
-  border: 2px solid var(--color-line);
-  transition: transform 0.9s cubic-bezier(0.7, 0, 0.2, 1);
-}
-.bulkhead-door-left {
-  left: 0;
-  border-radius: 0.5rem 0 0 0.5rem;
-}
-.bulkhead-door-right {
-  right: 0;
-  border-radius: 0 0.5rem 0.5rem 0;
-}
-.bulkhead.is-open .bulkhead-door-left {
-  transform: translateX(-101%);
-}
-.bulkhead.is-open .bulkhead-door-right {
-  transform: translateX(101%);
-}
-.bulkhead.is-open .bulkhead-glow {
-  opacity: 1;
-  transform: none;
-}
-.bulkhead.is-open .bulkhead-label {
-  opacity: 1;
+  white-space: nowrap;
+  box-shadow: 0 0 18px -4px var(--tone);
+  opacity: var(--open);
+  transform: translateX(-50%) translateY(calc((1 - var(--open)) * 26px)) scale(calc(0.8 + var(--open) * 0.2));
+  transition:
+    transform 0.12s linear,
+    opacity 0.12s linear;
 }
 
 @keyframes scene-in {
