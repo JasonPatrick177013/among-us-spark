@@ -1,6 +1,7 @@
 import { useState, type CSSProperties, type FormEvent } from 'react'
 import { CircleCheck, ExternalLink, Info, Send, TriangleAlert } from 'lucide-react'
 import { eventConfig } from '../config/event'
+import { useCrew } from '../context/CrewContext'
 import { validateRegistration, type RegistrationErrors, type RegistrationValues } from '../lib/validation'
 import { Cadet } from './art/Cadet'
 import { Reveal } from './ui/Reveal'
@@ -188,6 +189,7 @@ function RegistrationForm() {
 
 export function Registration() {
   const { externalFormUrl } = eventConfig.registration
+  const { suit, accessory } = useCrew()
 
   return (
     <section id="register" aria-labelledby="register-title" className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
@@ -200,7 +202,7 @@ export function Registration() {
             intro="Put your name on the manifest so the organizers know you are coming aboard."
             accent="sus"
           />
-          <Cadet suit="red" pose="wave" className="float hidden h-56 w-auto lg:block" style={{ '--dur': '7s' } as CSSProperties} />
+          <Cadet suit={suit} accessory={accessory} pose="wave" className="float hidden h-56 w-auto lg:block" style={{ '--dur': '7s' } as CSSProperties} />
         </div>
 
         <Reveal className="lg:col-span-3">

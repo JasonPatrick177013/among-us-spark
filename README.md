@@ -27,6 +27,8 @@ Impostor Protocol is a single-page event site: hero with call to action, mission
 - **Single source of truth** for all event content in `src/config/event.ts`
 - **Scroll tour, schedule timeline and bulkhead-door section transitions, a progress rail and a themed cursor**, all keyboard friendly and static under reduced motion
 - **Reactor mini-game** that works with keyboard, touch and screen readers
+- **Crew lab and command deck**: pick a suit colour and gear that follow you around the page, then try a wiring task and an emergency-meeting case (sabotage and ejection included). Both are keyboard friendly
+- **Starfield with depth** that drifts with the cursor and scroll
 - **Ship radio** in the navbar: on/off, change song, volume and song credits, with four original CC0 tracks generated in the browser (no audio files)
 - **Optional live countdown** that only appears when a valid future start date is set
 - **Three registration modes**: demo form, external form link, or a public form-service endpoint

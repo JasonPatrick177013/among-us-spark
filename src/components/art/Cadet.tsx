@@ -1,4 +1,5 @@
 import type { SVGProps } from 'react'
+import type { Accessory } from '../../config/crew'
 import { INK, suits, type SuitName } from './palette'
 
 export type CadetPose = 'idle' | 'wave' | 'point' | 'cheer'
@@ -6,6 +7,7 @@ export type CadetPose = 'idle' | 'wave' | 'point' | 'cheer'
 type CadetProps = SVGProps<SVGSVGElement> & {
   suit?: SuitName
   pose?: CadetPose
+  accessory?: Accessory
 }
 
 /**
@@ -13,7 +15,7 @@ type CadetProps = SVGProps<SVGSVGElement> & {
  * It is not an official Among Us asset. Because it is an <svg>, it can be used on
  * its own in the page OR nested inside a bigger <svg> scene (x / y / width / height work).
  */
-export function Cadet({ suit = 'red', pose = 'idle', ...svgProps }: CadetProps) {
+export function Cadet({ suit = 'red', pose = 'idle', accessory = 'antenna', ...svgProps }: CadetProps) {
   const { main, shade } = suits[suit]
 
   // Each arm is a rounded bar rotated around its shoulder. 0deg = hanging down.
@@ -28,9 +30,12 @@ export function Cadet({ suit = 'red', pose = 'idle', ...svgProps }: CadetProps) 
   return (
     <svg viewBox="0 0 120 170" aria-hidden="true" focusable="false" {...svgProps}>
       <g stroke={INK} strokeWidth="4" strokeLinejoin="round" strokeLinecap="round">
-        {/* antenna */}
-        <path d="M60 18V8" fill="none" />
-        <circle cx="60" cy="7" r="4.5" fill="#FFD166" />
+        {accessory === 'antenna' && (
+          <>
+            <path d="M60 18V8" fill="none" />
+            <circle cx="60" cy="7" r="4.5" fill="#FFD166" />
+          </>
+        )}
         {/* boots */}
         <rect x="37" y="132" width="20" height="28" rx="9" fill={shade} />
         <rect x="63" y="132" width="20" height="28" rx="9" fill={shade} />
@@ -44,6 +49,8 @@ export function Cadet({ suit = 'red', pose = 'idle', ...svgProps }: CadetProps) 
         {/* visor */}
         <ellipse cx="60" cy="52" rx="25" ry="19" fill="#0B1330" />
       </g>
+      {/* gear that sits on top of the helmet */}
+      <Gear accessory={accessory} />
       {/* visor glints */}
       <path d="M43 46q6-9 16-10" stroke="#9FD9FF" strokeWidth="3" strokeLinecap="round" fill="none" />
       <circle cx="75" cy="60" r="2" fill="#fff" opacity=".8" />
@@ -57,4 +64,45 @@ export function Cadet({ suit = 'red', pose = 'idle', ...svgProps }: CadetProps) 
       <rect x="68" y="101" width="4" height="4" rx="1" fill="#F45858" />
     </svg>
   )
+}
+
+/** Hats and extras. Every shape stays inside the 120x170 viewBox so nothing is clipped. */
+function Gear({ accessory }: { accessory: Accessory }) {
+  const line = { stroke: INK, strokeWidth: 4, strokeLinejoin: 'round' as const, strokeLinecap: 'round' as const }
+  switch (accessory) {
+    case 'sprout':
+      return (
+        <g {...line}>
+          <path d="M60 18V9" fill="none" />
+          <path d="M60 10C52 1 42 4 44 12C51 15 58 14 60 10Z" fill="#8DD982" />
+          <path d="M60 10C68 1 78 4 76 12C69 15 62 14 60 10Z" fill="#5DAF5A" />
+        </g>
+      )
+    case 'party':
+      return (
+        <g {...line}>
+          <path d="M45 24L60 3L75 24Z" fill="#B8A5F5" />
+          <path d="M52 14L68 14M49 19L71 19" stroke="#FFE5D1" strokeWidth="3" fill="none" />
+          <circle cx="60" cy="4" r="4" fill="#FFD166" />
+        </g>
+      )
+    case 'halo':
+      return (
+        <g fill="none">
+          <ellipse cx="60" cy="9" rx="21" ry="5.5" stroke={INK} strokeWidth="9" />
+          <ellipse cx="60" cy="9" rx="21" ry="5.5" stroke="#FFD166" strokeWidth="4.5" />
+        </g>
+      )
+    case 'crown':
+      return (
+        <g {...line}>
+          <path d="M42 24L45 6L53 15L60 3L67 15L75 6L78 24Z" fill="#FFD166" />
+          <circle cx="60" cy="14" r="2.6" fill="#F45858" />
+          <circle cx="49" cy="18" r="2" fill="#67C9F5" />
+          <circle cx="71" cy="18" r="2" fill="#67C9F5" />
+        </g>
+      )
+    default:
+      return null
+  }
 }

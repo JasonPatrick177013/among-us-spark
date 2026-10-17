@@ -3,7 +3,7 @@ type SectionHeadingProps = {
   kicker: string
   title: string
   intro?: string
-  accent?: 'sus' | 'gold' | 'sky' | 'lime'
+  accent?: 'sus' | 'gold' | 'sky' | 'lime' | 'violet'
 }
 
 const accents = {
@@ -11,6 +11,7 @@ const accents = {
   gold: 'text-gold',
   sky: 'text-sky',
   lime: 'text-lime',
+  violet: 'text-violet',
 }
 
 /** Shared section title: a mono "ship readout" kicker, a big heading, an optional intro. */

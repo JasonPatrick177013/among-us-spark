@@ -1,5 +1,14 @@
 import type { CSSProperties } from 'react'
+import { useCrew } from '../../context/CrewContext'
 import { Cadet } from './Cadet'
+import type { SuitName } from './palette'
+
+/** The two background cadets keep their usual colours unless the visitor picked one of them. */
+function companions(player: SuitName): [SuitName, SuitName] {
+  const pool: SuitName[] = ['green', 'blue', 'yellow', 'purple']
+  const free = pool.filter((s) => s !== player)
+  return [free[0], free[1]]
+}
 
 /**
  * Hero illustration: a spaceship viewport with planets, orbit lines and three cadets
@@ -7,6 +16,8 @@ import { Cadet } from './Cadet'
  * has a fixed aspect ratio (no layout shift while the page loads).
  */
 export function ShipWindow() {
+  const { suit, accessory } = useCrew()
+  const [left, right] = companions(suit)
   return (
     <svg viewBox="0 0 560 500" className="h-auto w-full" role="img" aria-label="Illustration: cadets gathered at a spaceship window overlooking two planets">
       <defs>
@@ -74,9 +85,9 @@ export function ShipWindow() {
       </text>
 
       {/* cadets stand behind the console */}
-      <Cadet suit="green" pose="point" x="52" y="238" width="112" height="158" />
-      <Cadet suit="blue" pose="wave" x="398" y="226" width="118" height="167" />
-      <Cadet suit="red" pose="idle" x="214" y="214" width="136" height="192" />
+      <Cadet suit={left} pose="point" x="52" y="238" width="112" height="158" />
+      <Cadet suit={right} pose="wave" x="398" y="226" width="118" height="167" />
+      <Cadet suit={suit} accessory={accessory} pose="idle" x="214" y="214" width="136" height="192" />
 
       {/* meeting console */}
       <rect x="20" y="382" width="520" height="104" rx="26" fill="#141A40" stroke="#3A447F" strokeWidth="4" />

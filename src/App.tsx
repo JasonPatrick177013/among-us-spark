@@ -1,4 +1,6 @@
 import { Starfield } from './components/art/Starfield'
+import { CommandDeck } from './components/CommandDeck'
+import { CrewLab } from './components/CrewLab'
 import { CursorGlow } from './components/CursorGlow'
 import { EventInfo } from './components/EventInfo'
 import { Faq } from './components/Faq'
@@ -13,10 +15,11 @@ import { Registration } from './components/Registration'
 import { Schedule } from './components/Schedule'
 import { ScrollRail } from './components/ScrollRail'
 import { SectionTransition } from './components/ui/SectionTransition'
+import { CrewProvider } from './context/CrewContext'
 
 export default function App() {
   return (
-    <>
+    <CrewProvider>
       <a
         href="#event"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-gold focus:px-4 focus:py-2 focus:font-semibold focus:text-void"
@@ -38,8 +41,12 @@ export default function App() {
         <Schedule />
         <SectionTransition label="Task list" tone="gold" />
         <Missions />
+        <SectionTransition label="Crew lab" tone="violet" />
+        <CrewLab />
         <SectionTransition label="Reactor bay" tone="sus" />
         <ReactorGame />
+        <SectionTransition label="Command deck" tone="gold" />
+        <CommandDeck />
         <SectionTransition label="Boarding gate" tone="lime" />
         <Registration />
         <SectionTransition label="Comms" tone="sky" />
@@ -47,6 +54,6 @@ export default function App() {
       </main>
       <Footer />
       <ScrollRail />
-    </>
+    </CrewProvider>
   )
 }

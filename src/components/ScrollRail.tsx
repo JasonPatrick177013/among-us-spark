@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { useActiveSection } from '../hooks/useActiveSection'
+import { useCrew } from '../context/CrewContext'
 import { Cadet, type CadetPose } from './art/Cadet'
+import { suits } from './art/palette'
 
 const stops = [
   { id: 'top', label: 'Top', quip: "Let's go!", tone: '#ff4f63' },
@@ -8,7 +10,9 @@ const stops = [
   { id: 'journey', label: 'Ship tour', quip: 'Ship tour!', tone: '#3fd2ff' },
   { id: 'schedule', label: 'Schedule', quip: 'Flight plan!', tone: '#6cf08a' },
   { id: 'missions', label: 'Missions', quip: 'Tasks, tasks!', tone: '#b690ff' },
+  { id: 'lab', label: 'Crew lab', quip: 'Looking sharp!', tone: '#b690ff' },
   { id: 'reactor', label: 'Reactor', quip: "Don't blow it!", tone: '#ff4f63' },
+  { id: 'command-deck', label: 'Command deck', quip: 'Who is sus?', tone: '#ffcb3d' },
   { id: 'register', label: 'Register', quip: 'Join us!', tone: '#6cf08a' },
   { id: 'faq', label: 'FAQ', quip: 'Any questions?', tone: '#3fd2ff' },
 ]
@@ -27,6 +31,7 @@ const burstAngles = Array.from({ length: 8 }, (_, i) => (i / 8) * Math.PI * 2)
  * sparks, bursts or speech bubbles.
  */
 export function ScrollRail() {
+  const { suit, accessory } = useCrew()
   const markerRef = useRef<HTMLDivElement>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
   const fillRef = useRef<HTMLDivElement>(null)
@@ -235,7 +240,7 @@ export function ScrollRail() {
       <div ref={markerRef} className="pointer-events-none absolute left-1/2 z-10 -translate-x-1/2 -translate-y-1/2" style={{ top: 0 }} aria-hidden="true">
         <div className="rail-bob">
           <div ref={bodyRef} style={{ transformOrigin: '50% 60%' }}>
-            <Cadet suit="red" pose={pose} className="h-10 w-auto drop-shadow-[0_0_8px_rgb(255_79_99/0.8)]" />
+            <Cadet suit={suit} accessory={accessory} pose={pose} className="h-10 w-auto" style={{ filter: `drop-shadow(0 0 8px ${suits[suit].main})` }} />
           </div>
         </div>
         {bubble && (

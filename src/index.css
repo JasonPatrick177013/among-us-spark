@@ -683,3 +683,112 @@ html {
     transform: scale(0.9) translateX(6px);
   }
 }
+
+/* ---------- Starfield extras ---------- */
+
+.shooting-star {
+  position: absolute;
+  width: 7rem;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #ffe5d1);
+  opacity: 0;
+  transform: rotate(32deg);
+  animation: shooting var(--dur, 12s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes shooting {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(32deg);
+  }
+  2% {
+    opacity: 1;
+  }
+  7% {
+    opacity: 0;
+    transform: translate(-26rem, 16rem) rotate(32deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-26rem, 16rem) rotate(32deg);
+  }
+}
+
+/* ---------- Crew lab ---------- */
+
+@keyframes cadet-pop {
+  0% {
+    transform: scale(0.88) rotate(-4deg);
+  }
+  60% {
+    transform: scale(1.06) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+.cadet-pop {
+  animation: cadet-pop 0.45s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+/* ---------- Command deck games ---------- */
+
+/* SVG buttons (wire connectors): no default outline, a ring shows on keyboard focus instead */
+.node {
+  cursor: pointer;
+  outline: none;
+}
+.node .node-ring {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.node:focus-visible .node-ring,
+.node[aria-pressed='true'] .node-ring {
+  opacity: 1;
+}
+.node:hover .node-body {
+  filter: brightness(1.18);
+}
+
+@keyframes wire-draw {
+  from {
+    stroke-dashoffset: 520;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.wire-in {
+  stroke-dasharray: 520;
+  animation: wire-draw 0.45s ease-out;
+}
+
+/* Sabotage: a red emergency flicker over the security feed */
+@keyframes alarm {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 2px rgb(244 88 88 / 0.9), inset 0 0 60px rgb(244 88 88 / 0.35);
+  }
+  50% {
+    box-shadow: inset 0 0 0 2px rgb(244 88 88 / 0.3), inset 0 0 20px rgb(244 88 88 / 0.1);
+  }
+}
+.alarm {
+  animation: alarm 0.9s ease-in-out infinite;
+}
+
+/* Ejection: the voted crewmate tumbles off into space */
+@keyframes eject {
+  0% {
+    transform: translate(0, 0) rotate(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(140%, -90%) rotate(560deg) scale(0.2);
+    opacity: 0;
+  }
+}
+.eject {
+  animation: eject 2s cubic-bezier(0.5, 0, 0.9, 0.6) forwards;
+}
