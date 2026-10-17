@@ -50,6 +50,24 @@ export function MusicPlayer() {
       window.removeEventListener('pointerdown', onPointer)
     }
   }, [open])
+  // Start the radio on the visitor's first click, tap or key press.
+// (Browsers block sound until then, so this is as "automatic" as it can get.)
+useEffect(() => {
+  if (radio.getState().playing) return
+  const start = (e: Event) => {
+    // If their first click is on the radio itself, let that button do its job
+    if ((e.target as HTMLElement | null)?.closest('[data-radio]')) return
+    radio.play()
+    cleanup()
+  }
+  const cleanup = () => {
+    window.removeEventListener('pointerup', start)
+    window.removeEventListener('keydown', start)
+  }
+  window.addEventListener('pointerup', start)
+  window.addEventListener('keydown', start)
+  return cleanup
+}, [radio])
 
   const VolumeIcon = volume === 0 ? VolumeX : volume < 0.45 ? Volume1 : Volume2
 
