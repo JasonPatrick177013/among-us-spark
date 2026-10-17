@@ -57,27 +57,6 @@ The navbar has a split-pill music control: the left half turns music on or off, 
 - To add a real recording, put the `.mp3` in `public/audio/` and add an entry with `src` (there is a commented example in `music.ts`). Only use music you have the right to use, and copy the credit line the artist asks for into `composer`, `license` and `note`.
 - The chosen song and volume are remembered in `localStorage`.
 
-## Getting Started
-
-**Prerequisites:** Node.js 18 or newer and npm.
-
-```bash
-# Install dependencies
-npm install
-
-# Start the dev server (usually http://localhost:5173)
-npm run dev
-
-# Type-check and create a production build in dist/
-npm run build
-
-# Serve the production build locally
-npm run preview
-
-# Lint the project
-npm run lint
-```
-
 ## Configuration
 
 All event content lives in **`src/config/event.ts`**. Fields set to `null` render as a clearly marked "To be announced" placeholder.
