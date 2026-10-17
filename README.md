@@ -1,66 +1,134 @@
-# Impostor Protocol: an Among Us event landing page
+<div align="center">
 
-A fan-made, laptop-first landing page (responsive down to phones) built with React, Vite, TypeScript and Tailwind CSS.
-Not affiliated with Innersloth. All illustrations are original SVG artwork.
+# Impostor Protocol
 
-## Run it locally
+**A fan-made landing page for an Among Us event.**
+
+Laptop-first, fully responsive, and accessible, with an original space-station theme.
+
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
+
+</div>
+
+> **Disclaimer:** This is an unofficial fan project and is not affiliated with Innersloth. All illustrations are original SVG artwork.
+
+---
+
+## Overview
+
+Impostor Protocol is a single-page event site: hero with call to action, mission briefing, event details, FAQ and a registration section. Every piece of event content is driven from one configuration file, so updating the site for a real event takes minutes and requires no changes to components.
+
+## Features
+
+- **Responsive, laptop-first layout** that scales down cleanly to tablets and phones
+- **Single source of truth** for all event content in `src/config/event.ts`
+- **Optional live countdown** that only appears when a valid future start date is set
+- **Three registration modes**: demo form, external form link, or a public form-service endpoint
+- **Client-side form validation** with clear, inline error messages
+- **Accessible by design**: keyboard navigation, visible focus states, labelled form fields, ARIA-linked FAQ accordion
+- **Reduced-motion support**: animations switch off for users who request it
+- **Original SVG artwork**: custom cadet mascots, ship window and animated starfield
+- **Design tokens** for colors, fonts and radii in a single CSS file
+
+## Tech Stack
+
+| Area | Tools |
+| --- | --- |
+| Framework | React 19 |
+| Build tool | Vite |
+| Language | TypeScript |
+| Styling | Tailwind CSS 4 |
+| Icons | Lucide React |
+| Fonts | Space Grotesk, Inter (via Fontsource) |
+| Linting | Oxlint |
+
+## Getting Started
+
+**Prerequisites:** Node.js 18 or newer and npm.
 
 ```bash
-npm install        # once, downloads dependencies
-npm run dev        # starts the dev server, open the URL it prints (usually http://localhost:5173)
-npm run build      # type-checks and creates the production build in dist/
-npm run preview    # serves dist/ locally so you can test the real build
+# Install dependencies
+npm install
+
+# Start the dev server (usually http://localhost:5173)
+npm run dev
+
+# Type-check and create a production build in dist/
+npm run build
+
+# Serve the production build locally
+npm run preview
+
+# Lint the project
+npm run lint
 ```
 
-## Change the event details (one file)
+## Configuration
 
-Edit **`src/config/event.ts`**. Anything set to `null` shows as a "To be announced" placeholder.
+All event content lives in **`src/config/event.ts`**. Fields set to `null` render as a clearly marked "To be announced" placeholder.
 
 | To change | Edit |
 | --- | --- |
 | Event name, headline, description | `name`, `headline`, `description` |
-| Date, time, venue, format, players | the `details` block |
-| Show a real countdown | `startsAtISO`, e.g. `'2026-12-05T18:00:00+05:30'` (only appears if valid and in the future) |
+| Date, time, venue, format, players, registration info | the `details` block |
+| Live countdown | `startsAtISO`, an ISO date with time zone, e.g. `'2026-12-05T18:00:00+05:30'` |
 | Send people to a Google Form | `registration.externalFormUrl` |
-| Real social links | `socialLinks` |
+| Social links | `socialLinks` |
 
-## How the registration form behaves
+> The event details currently in the repository are placeholder content. Replace them with confirmed information before publishing.
 
-- **Default (demo mode):** validates the fields and says clearly that nothing was saved or sent.
-- **With `externalFormUrl`:** the form is replaced by a button that opens your official form in a new tab (the simplest real option).
-- **With a form service:** set `VITE_REGISTRATION_ENDPOINT` (see `.env.example`) and the form POSTs JSON to it. That value is bundled into public browser code, so it must only ever be a public URL, never a secret. If you collect real emails, tell people what you will use them for and who can see them.
+## Registration
 
-## Project map
+The registration section supports three modes, chosen automatically:
+
+1. **Demo mode (default):** validates the fields and states clearly that nothing was saved or sent.
+2. **External form:** when `registration.externalFormUrl` is set, the form is replaced by a button that opens your official form in a new tab.
+3. **Form service:** when `VITE_REGISTRATION_ENDPOINT` is set (see `.env.example`), the form submits JSON to that endpoint.
+
+If you collect real sign-ups, tell participants what their data is used for and who can see it.
+
+## Project Structure
 
 ```
-src/config/event.ts        all event content (edit this)
-src/index.css              design tokens (colors, fonts, radii), buttons, animations
-src/components/            Navbar, Hero, EventInfo, Missions, Registration, Faq, Footer
-src/components/art/        original SVG artwork: Cadet mascot, ShipWindow, Starfield
-src/lib/validation.ts      form rules
-src/hooks/                 countdown + active-section tracking
+src/
+├── config/
+│   ├── event.ts          # All event content (edit this)
+│   └── nav.ts            # Navigation links
+├── components/
+│   ├── Navbar.tsx
+│   ├── Hero.tsx
+│   ├── EventInfo.tsx
+│   ├── Missions.tsx
+│   ├── Registration.tsx
+│   ├── Faq.tsx
+│   ├── Footer.tsx
+│   ├── art/              # Original SVG artwork (Cadet, ShipWindow, Starfield)
+│   └── ui/               # Logo, Reveal, SectionHeading
+├── hooks/                # Countdown and active-section tracking
+├── lib/                  # Form validation and navigation helpers
+└── index.css             # Design tokens, buttons, panels, animations
 ```
 
-## Deploy: GitHub, then Vercel
+## Deployment
 
-1. Create a **new, empty** repository on github.com (do not reuse an existing project).
-2. In this folder run:
-   ```bash
-   git init
-   git add .
-   git status            # review: there should be NO .env file and NO node_modules/dist
-   git commit -m "Among Us event landing page"
-   git branch -M main
-   git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
-   git push -u origin main
-   ```
-3. On vercel.com choose **Add New, Project**, import that repository.
-4. Vercel detects **Vite** automatically. Verify: Build Command `npm run build`, Output Directory `dist`. No environment variables are needed.
-5. Click **Deploy**, then open the live URL and test it on your laptop and phone.
-6. To update later: edit, commit and `git push`. Vercel redeploys automatically.
+The site is a static build and deploys to any static host. For Vercel:
 
-Common deployment errors: a build failing on a TypeScript error (run `npm run build` locally first), or a wrong Output Directory (must be `dist`).
+1. Push this repository to GitHub.
+2. In Vercel, choose **Add New → Project** and import the repository.
+3. Vercel detects Vite automatically. Confirm **Build Command** `npm run build` and **Output Directory** `dist`.
+4. Click **Deploy**. Later pushes to `main` redeploy automatically.
 
-## Security rules followed
+No environment variables are required.
 
-No secrets in the code. `.env` files are git-ignored (only `.env.example` with placeholders is allowed). `VITE_` variables are public by design.
+## Security
+
+- No secrets are stored in the repository.
+- `.env` files are git-ignored; only `.env.example` with placeholders is committed.
+- `VITE_` variables are bundled into public browser code, so they must only ever contain public values.
+
+## License
+
+No license has been specified. Add a `LICENSE` file if you want others to reuse the code.
